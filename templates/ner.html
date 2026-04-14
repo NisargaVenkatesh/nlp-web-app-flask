@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NER</title>
+</head>
+<body>
+
+  <form action="/perform_ner" method="post">
+      <label>Type your text here</label><br>
+      <textarea name="ner_text" rows="6" cols="60">{{ input_text or '' }}</textarea><br><br>
+      <input type="submit" value="Perform NER">
+  </form>
+
+  {% if response is defined %}
+      <h3>NER Result:</h3>
+
+      {% if response %}
+          <table border="1" cellpadding="8">
+              <tr>
+                  <th>Word</th>
+                  <th>Entity Type</th>
+                  <th>Score</th>
+                  <th>Start</th>
+                  <th>End</th>
+              </tr>
+
+              {% for i in response %}
+              <tr>
+                  <td>{{ i['word'] }}</td>
+                  <td>{{ i['entity_group'] }}</td>
+                  <td>{{ i['score'] }}</td>
+                  <td>{{ i['start'] }}</td>
+                  <td>{{ i['end'] }}</td>
+              </tr>
+              {% endfor %}
+          </table>
+      {% else %}
+          <p>No entities found.</p>
+      {% endif %}
+  {% endif %}
+
+</body>
+</html>
